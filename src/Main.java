@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -16,7 +17,10 @@ public class Main {
     manager.addProduct(new Product("2", "Product 2", 5, 14.99, "Category 2", ProductStatus.ACTIVE));
     manager.addProduct(new Product("3", "Product 3", 0, 19.99, "Category 1", ProductStatus.OUT_OF_STOCK));
     manager.addProduct(new Product("4", "Product 4", 3, 24.99, "Category 2", ProductStatus.DISCONTINUED));
-
+    
+    System.out.println("\n getCategoryPriceSum");
+    Map<String, Double> categoryPrice = manager.getCategoryPriceSum();
+    categoryPrice.entrySet().forEach(System.out::println);
     // ORD-122
     manager.registerOrderNumberSupplier("supplier-1", () -> {
       int orderNumber = random.nextInt(1000);
@@ -70,5 +74,25 @@ public class Main {
                 product.getProductStatus()));
     System.out.println("Active products :");
     filteredProducts.forEach(System.out::println);
+    
+    System.out.println("\n getActiveProductsSortedByPrice");
+    List<Product> sortedProducts = manager.getActiveProductsSortedByPrice();
+    sortedProducts.forEach(System.out::println);
+  
+//    System.out.println("\n\nCalculate average price in category");
+//    double averagePrice = manager.calculateAveragePriceInCategory("Category 1");
+//    System.out.println("Category 1 average price:" + averagePrice);
+//    averagePrice = manager.calculateAveragePriceInCategory("Category 2");
+//    System.out.println("Category 2 average price:" + averagePrice);
+    
+
+    
+    System.out.println("\n\nfor calculating average price in category. Enter category:");
+    Scanner sc = new Scanner(System.in);
+    String category = sc.nextLine();
+   double averagePrice = manager.calculateAveragePriceInCategory(category);
+   System.out.println(averagePrice);
+   
+  
   }
 }
